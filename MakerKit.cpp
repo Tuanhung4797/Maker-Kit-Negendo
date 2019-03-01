@@ -19,7 +19,7 @@ void MakerKit::setLED(int pin, int status)
     else
         digitalWrite(pin, LOW);
 }
-bool MakerKit::buttonPressed(int pin)
+bool MakerKit::readButton(int pin)
 {
     pinMode(pin, INPUT);
     int statusButton = digitalRead(pin);
@@ -28,7 +28,7 @@ bool MakerKit::buttonPressed(int pin)
     else
         return 0;
 }
-bool MakerKit::microswitchPressed(int pin)
+bool MakerKit::readMicroswitch(int pin)
 {
     pinMode(pin, INPUT);
     int statusSwitch = digitalRead(pin);
@@ -43,7 +43,7 @@ int MakerKit::getGasSensor(int pin)
     map(gas_value,0,1024,0,100);
     return gas_value;
 }
-bool MakerKit::touchSensor(int pin)
+bool MakerKit::readTouch(int pin)
 {
     pinMode(pin, INPUT);
     int touched = digitalRead(pin);
@@ -69,6 +69,12 @@ int MakerKit::getLight(int pin)
     int light_value = analogRead(pin);
     map(light_value,0,1024,0,100);
     return light_value;
+}
+int MakerKit::readVibration(int pin)
+{
+    int vib_value = analogRead(pin);
+    map(vib_value,0,1024,0,100);
+    return vib_value;
 }
 int MakerKit::getAcceleromenterValue(int axis)
 {

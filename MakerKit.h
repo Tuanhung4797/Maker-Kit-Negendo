@@ -49,12 +49,12 @@ public:
     void setMotor(int M, int speed);
     void relay(int pin, int status);
     void setLED(int pin, int status);
-    bool buttonPressed(int pin);
-    bool microswitchPressed(int pin);
+    bool readButton(int pin);
+    bool readMicroswitch(int pin);
     int getGasSensor(int pin);
     int getTemperature(int pin);
     int getHumidity(int pin);
-    bool touchSensor(int pin);
+    bool readTouch(int pin);
     int getSoilMoisture(int pin);
     int getSound(int pin);
     int getLight(int pin);
