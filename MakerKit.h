@@ -31,8 +31,8 @@ NEGENDO Education
 
 #include "DHT.h"
 
-#define DHTTYPE DHT11
-#define DHTPIN 2
+//#define DHTTYPE DHT11
+//#define DHTPIN 2
 #define M1A 3
 #define M1B 5
 #define M2A 6
@@ -55,6 +55,7 @@ public:
     int getTemperature(int pin);
     int getHumidity(int pin);
     bool readTouch(int pin);
+    bool readVibration(int pin);
     int getSoilMoisture(int pin);
     int getSound(int pin);
     int getLight(int pin);
@@ -62,6 +63,6 @@ public:
     int getPotentiomenterLocation(int pin);
 private:
     /* data */
-    DHT dht = DHT(DHTPIN, DHTTYPE);
+    //DHT dht = DHT(DHTPIN, DHTTYPE);
 };
 #endif
