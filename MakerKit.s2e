@@ -1,0 +1,299 @@
+{	"extensionName": "Maker Kit NEGENDO",
+    "description": "maker Kit NEGENDO Scratch",
+	"version": "1.0.0",
+	"author": "NEGENDO",
+	"homepage": "https://negendo.com",
+	"sort": 0,
+	"javascriptURL": "js/MakerKit.js",
+	"firmware": "1.0",
+	"extensionPort": 0,
+    "blockSpecs": [
+        ["h",
+            "Maker Kit Program","runArduino",
+			{
+                "setup":"",
+			    "inc": "",
+			    "def":"",
+			    "work":"",
+			    "loop":""
+			}
+        ],
+
+        ["w", 
+			"Set motor: %d.motor\ speed: %n \%\n ","setMotor","M1","100",
+		    {
+			    "encode":"{d0}{d1}",
+			    "setup":"",
+			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "def":"MakerKit Maker;\n",
+			    "work":"Maker.setMotor({0},{1});\n",
+			    "loop":""
+            }
+        ],
+        
+        ["w", 
+			"Stop motor: %d.motor","stopMotor","M1",
+		    {
+			    "encode":"{d0}",
+			    "setup":"",
+			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "def":"MakerKit Maker;\n",
+			    "work":"Maker.stopMotor({0});\n",
+			    "loop":""
+            }
+        ],
+    
+        ["w", 
+			"Set relay pin %d.pin\ status: %d.status \n ","setRelay","D2","ON",
+		    {
+			    "encode":"{d0}{d1}",
+			    "setup":"",
+			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "def":"MakerKit Maker;\n",
+			    "work":"Maker.relay({0},{1});\n",
+			    "loop":""
+            }
+        ],
+
+        ["w", 
+			"Set LED pin %d.pin\ status: %d.status \n ","setLED","D2","ON",
+		    {
+			    "encode":"{d0}{d1}",
+			    "setup":"",
+			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "def":"MakerKit Maker;\n",
+			    "work":"Maker.setLED({0},{1});\n",
+			    "loop":""
+            }
+        ],
+
+        ["w", 
+			"Set Servo pin %d.servo\ angle: %n \n ","setServo","D10","90",
+		    {
+			    "encode":"{d0}{d1}",
+			    "setup":"servo_{0}.attach({0});\n",
+			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "def":"MakerKit Maker;\nServo servo_{0};\n",
+			    "work":"servo_{0}.write({1});\n",
+			    "loop":""
+            }
+        ],
+
+        ["w", 
+			"Disable Servo pin %d.servo\n ","disableServo","D10",
+		    {
+			    "encode":"{d0}",
+			    "setup":"",
+			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "def":"MakerKit Maker;\nServo servo_{0};\n",
+			    "work":"servo_{0}.detach();\n",
+			    "loop":""
+            }
+        ],
+
+        ["B", 
+			"Button pressed pin: %d.pin ","buttonPressed","D2",
+		    {
+			    "encode":"{d0}",
+			    "setup":"",
+			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "def":"MakerKit Maker;\n",
+			    "work":"Maker.buttonPressed({0})",
+			    "loop":""
+            }
+        ],
+
+        ["B", 
+			"Micro switch pressed pin: %d.pin ","readMicroswitch","D2",
+		    {
+			    "encode":"{d0}",
+			    "setup":"",
+			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "def":"MakerKit Maker;\n",
+			    "work":"Maker.readMicroswitch({0})",
+			    "loop":""
+            }
+        ],
+
+        ["B", 
+			"Touch pin: %d.pin ","readTouch","D2",
+		    {
+			    "encode":"{d0}",
+			    "setup":"",
+			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "def":"MakerKit Maker;\n",
+			    "work":"Maker.readTouch({0})",
+			    "loop":""
+            }
+        ],
+
+        ["B", 
+			"Vibration pin: %d.pin ","readVibration","D2",
+		    {
+			    "encode":"{d0}",
+			    "setup":"",
+			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "def":"MakerKit Maker;\n",
+			    "work":"Maker.readVibration({0})",
+			    "loop":""
+            }
+        ],
+
+        ["R", 
+			"Get Gas sensor pin: %d.pin ","getGasSensor","A0",
+		    {
+			    "encode":"{d0}",
+			    "setup":"",
+			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "def":"MakerKit Maker;\n",
+			    "work":"Maker.getGasSensor({0})",
+			    "loop":""
+            }
+        ],
+
+        ["R", 
+			"Get Sound sensor pin: %d.pin ","getSound","A0",
+		    {
+			    "encode":"{d0}",
+			    "setup":"",
+			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "def":"MakerKit Maker;\n",
+			    "work":"Maker.getSound({0})",
+			    "loop":""
+            }
+        ],
+
+        ["R", 
+			"Get Light sensor pin: %d.pin ","getLight","A0",
+		    {
+			    "encode":"{d0}",
+			    "setup":"",
+			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "def":"MakerKit Maker;\n",
+			    "work":"Maker.getLight({0})",
+			    "loop":""
+            }
+        ],
+
+		["R", 
+			"Get Soil Moisture sensor pin: %d.pin ","getSoilMoisture","A0",
+		    {
+			    "encode":"{d0}",
+			    "setup":"",
+			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "def":"MakerKit Maker;\n",
+			    "work":"Maker.getSoilMoisture({0})",
+			    "loop":""
+            }
+        ],
+
+        ["R", 
+			"Get Potentiometer sensor pin: %d.pin ","getPotentiometer","A0",
+		    {
+			    "encode":"{d0}",
+			    "setup":"",
+			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "def":"MakerKit Maker;\n",
+			    "work":"Maker.getPotentiomenterLocation({0})",
+			    "loop":""
+            }
+        ],
+
+        ["R", 
+			"Get Acceleromenter value axis: %d.axis ","getAcceleromenterValue","X",
+		    {
+			    "encode":"{d0}",
+			    "setup":"",
+			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "def":"MakerKit Maker;\n",
+			    "work":"Maker.getAcceleromenterValue({0})",
+			    "loop":""
+            }
+        ],
+
+        ["R", 
+			"Temperature pin: %d.pin ","getTemperature","A0",
+		    {
+			    "encode":"{d0}",
+			    "setup":"dht.begin();\n",
+			    "inc":"#include \"DHT.h\"\n",
+			    "def":"DHT dht({0},DHT11);\n",
+			    "work":"dht.readTemperature()",
+			    "loop":""
+            }
+        ],
+        ["R", 
+			"Humidity pin: %d.pin ","getHumidity","A0",
+		    {
+			    "encode":"{d0}",
+			    "setup":"dht.begin();\n",
+			    "inc":"#include \"DHT.h\"\n",
+			    "def":"DHT dht({0},DHT11);\n",
+			    "work":"dht.readHumidity()",
+			    "loop":""
+            }
+        ],
+
+		["w",
+    		"LCD Print at %d.row Pos %n/ :  %s ", "LCDprint", "LINE1","0"," ",
+        	{
+        		"setup":"lcd.begin();\nlcd.backlight();\n",
+        		"inc":"#include \"LiquidCrystal_I2C.h\"\n",
+        		"def":"LiquidCrystal_I2C lcd(0x3F, 16, 2);\n",
+        		"work":"lcd.setCursor({1},{0});\nlcd.print({2});\nlcd.print(\" \");\n",
+        		"loop":""
+			}
+    	],
+
+		["w",
+			"LCD clear","LCDclear",
+			{
+				"setup":"lcd.begin();\nlcd.backlight();\n",
+        		"inc":"#include \"LiquidCrystal_I2C.h\"\n",
+        		"def":"LiquidCrystal_I2C lcd(0x3F, 16, 2);\n",
+				"work":"lcd.clear();\n",
+				"loop":""
+			}
+		]
+
+    ],
+
+    "menus": {
+		"pin":["D2","D3","D4","D5","D6","D7","D8","D9","D10","D11","D12","A0","A1","A2","A3"],
+		"axis":["X","Y","Z"],
+        "motor":["M1","M2"],
+        "status":["ON","OFF"],
+		"row":["LINE1","LINE2"],
+        "servo":["D2","D3","D4","D5","D6","D7","D8","D9","D10","D11","D12"]
+	},
+
+    "values":{
+        "D2":2,
+        "D3":3,
+        "D4":4,
+        "D5":5,
+        "D6":6,
+        "D7":7,
+        "D8":8,
+        "D9":9,
+        "D10":10,
+        "D11":11,
+        "D12":12,
+        "A0":14,
+		"A1":15,
+		"A2":16,
+		"A3":17,
+		"X":0,
+		"Y":1,
+		"Z":2,
+        "M1":1,
+        "M2":0,
+        "ON":1,
+        "OFF":0,
+		"LINE1":0,
+  		"LINE2":1
+    },
+
+    "translators":{
+	}
+}

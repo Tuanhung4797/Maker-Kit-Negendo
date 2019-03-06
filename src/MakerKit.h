@@ -19,6 +19,7 @@ Hardware: Arduino Uno R3 + Maker shield Uno made by NEGENDO
         3 - LED Light
         4 - Relay module
         5 - Module 2 motor
+        6 - LCD I2C
 Author: Tuan Hung
 NEGENDO Education
 */
@@ -29,7 +30,8 @@ NEGENDO Education
 #include "Arduino.h"
 #include "stdint.h"
 
-#include "DHT.h"
+//#include "DHT.h"
+#include "Servo.h"
 
 //#define DHTTYPE DHT11
 //#define DHTPIN 2
@@ -47,9 +49,12 @@ public:
     void stopM1();
     void stopM2();
     void setMotor(int M, int speed);
+    void stopMotor(int M);
     void relay(int pin, int status);
     void setLED(int pin, int status);
-    bool readButton(int pin);
+    void setServo(int pin, int angle);
+    void disableServo(int pin);
+    bool buttonPressed(int pin);
     bool readMicroswitch(int pin);
     int getGasSensor(int pin);
     int getTemperature(int pin);
@@ -64,5 +69,7 @@ public:
 private:
     /* data */
     //DHT dht = DHT(DHTPIN, DHTTYPE);
+    Servo servo1;
+    Servo servo2;
 };
 #endif

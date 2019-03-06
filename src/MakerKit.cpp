@@ -19,28 +19,28 @@ void MakerKit::setLED(int pin, int status)
     else
         digitalWrite(pin, LOW);
 }
-bool MakerKit::readButton(int pin)
+bool MakerKit::buttonPressed(int pin)
 {
     pinMode(pin, INPUT);
     int statusButton = digitalRead(pin);
     if(statusButton)
-        return 1;
-    else
         return 0;
+    else
+        return 1;
 }
 bool MakerKit::readMicroswitch(int pin)
 {
     pinMode(pin, INPUT);
     int statusSwitch = digitalRead(pin);
     if(statusSwitch)
-        return 1;
-    else
         return 0;
+    else
+        return 1;
 }
 int MakerKit::getGasSensor(int pin)
 {
     int gas_value = analogRead(pin);
-    gas_value = map(gas_value,15,100,0,100);
+    gas_value = map(gas_value,0,150,0,100);
     return gas_value;
 }
 bool MakerKit::readTouch(int pin)
@@ -55,7 +55,7 @@ bool MakerKit::readTouch(int pin)
 int MakerKit::getSoilMoisture(int pin)
 {
     int moisture_value = analogRead(pin);
-    moisture_value = map(moisture_value,0,1024,0,100);
+    moisture_value = map(moisture_value,0,300,0,100);
     return moisture_value;
 }
 int MakerKit::getSound(int pin)
@@ -155,4 +155,19 @@ void MakerKit::setMotor(int M, int speed) //speed in units of %
         runM1(speedMotor);
     else 
         runM2(speedMotor);
+}
+void MakerKit::stopMotor(int M)
+{
+    if(M)
+        stopM1();
+    else
+        stopM2();
+}
+void MakerKit::setServo(int pin, int angle)
+{
+
+}
+void MakerKit::disableServo(int pin)
+{
+
 }
