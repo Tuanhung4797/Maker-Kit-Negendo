@@ -212,7 +212,7 @@
         ],
 
         ["R", 
-			"Temperature pin: %d.pin ","getTemperature","A0",
+			"Temperature pin: %d.pin ","getTemperature","D2",
 		    {
 			    "encode":"{d0}",
 			    "setup":"dht.begin();\n",
@@ -223,7 +223,7 @@
             }
         ],
         ["R", 
-			"Humidity pin: %d.pin ","getHumidity","A0",
+			"Humidity pin: %d.pin ","getHumidity","D2",
 		    {
 			    "encode":"{d0}",
 			    "setup":"dht.begin();\n",
