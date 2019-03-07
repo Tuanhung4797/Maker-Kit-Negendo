@@ -24,7 +24,7 @@
 		    {
 			    "encode":"{d0}{d1}",
 			    "setup":"",
-			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "inc":"#include \"MakerKit.h\"\n",
 			    "def":"MakerKit Maker;\n",
 			    "work":"Maker.setMotor({0},{1});\n",
 			    "loop":""
@@ -36,7 +36,7 @@
 		    {
 			    "encode":"{d0}",
 			    "setup":"",
-			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "inc":"#include \"MakerKit.h\"\n",
 			    "def":"MakerKit Maker;\n",
 			    "work":"Maker.stopMotor({0});\n",
 			    "loop":""
@@ -48,7 +48,7 @@
 		    {
 			    "encode":"{d0}{d1}",
 			    "setup":"",
-			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "inc":"#include \"MakerKit.h\"\n",
 			    "def":"MakerKit Maker;\n",
 			    "work":"Maker.relay({0},{1});\n",
 			    "loop":""
@@ -60,7 +60,7 @@
 		    {
 			    "encode":"{d0}{d1}",
 			    "setup":"",
-			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "inc":"#include \"MakerKit.h\"\n",
 			    "def":"MakerKit Maker;\n",
 			    "work":"Maker.setLED({0},{1});\n",
 			    "loop":""
@@ -72,7 +72,7 @@
 		    {
 			    "encode":"{d0}{d1}",
 			    "setup":"servo_{0}.attach({0});\n",
-			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "inc":"#include <Servo.h>\n",
 			    "def":"MakerKit Maker;\nServo servo_{0};\n",
 			    "work":"servo_{0}.write({1});\n",
 			    "loop":""
@@ -84,7 +84,7 @@
 		    {
 			    "encode":"{d0}",
 			    "setup":"",
-			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "inc":"#include <Servo.h>\n",
 			    "def":"MakerKit Maker;\nServo servo_{0};\n",
 			    "work":"servo_{0}.detach();\n",
 			    "loop":""
@@ -96,7 +96,7 @@
 		    {
 			    "encode":"{d0}",
 			    "setup":"",
-			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "inc":"#include \"MakerKit.h\"\n",
 			    "def":"MakerKit Maker;\n",
 			    "work":"Maker.buttonPressed({0})",
 			    "loop":""
@@ -108,7 +108,7 @@
 		    {
 			    "encode":"{d0}",
 			    "setup":"",
-			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "inc":"#include \"MakerKit.h\"\n",
 			    "def":"MakerKit Maker;\n",
 			    "work":"Maker.readMicroswitch({0})",
 			    "loop":""
@@ -120,7 +120,7 @@
 		    {
 			    "encode":"{d0}",
 			    "setup":"",
-			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "inc":"#include \"MakerKit.h\"\n",
 			    "def":"MakerKit Maker;\n",
 			    "work":"Maker.readTouch({0})",
 			    "loop":""
@@ -132,7 +132,7 @@
 		    {
 			    "encode":"{d0}",
 			    "setup":"",
-			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "inc":"#include \"MakerKit.h\"\n",
 			    "def":"MakerKit Maker;\n",
 			    "work":"Maker.readVibration({0})",
 			    "loop":""
@@ -144,7 +144,7 @@
 		    {
 			    "encode":"{d0}",
 			    "setup":"",
-			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "inc":"#include \"MakerKit.h\"\n",
 			    "def":"MakerKit Maker;\n",
 			    "work":"Maker.getGasSensor({0})",
 			    "loop":""
@@ -156,7 +156,7 @@
 		    {
 			    "encode":"{d0}",
 			    "setup":"",
-			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "inc":"#include \"MakerKit.h\"\n",
 			    "def":"MakerKit Maker;\n",
 			    "work":"Maker.getSound({0})",
 			    "loop":""
@@ -168,7 +168,7 @@
 		    {
 			    "encode":"{d0}",
 			    "setup":"",
-			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "inc":"#include \"MakerKit.h\"\n",
 			    "def":"MakerKit Maker;\n",
 			    "work":"Maker.getLight({0})",
 			    "loop":""
@@ -180,7 +180,7 @@
 		    {
 			    "encode":"{d0}",
 			    "setup":"",
-			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "inc":"#include \"MakerKit.h\"\n",
 			    "def":"MakerKit Maker;\n",
 			    "work":"Maker.getSoilMoisture({0})",
 			    "loop":""
@@ -192,7 +192,7 @@
 		    {
 			    "encode":"{d0}",
 			    "setup":"",
-			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "inc":"#include \"MakerKit.h\"\n",
 			    "def":"MakerKit Maker;\n",
 			    "work":"Maker.getPotentiomenterLocation({0})",
 			    "loop":""
@@ -204,7 +204,7 @@
 		    {
 			    "encode":"{d0}",
 			    "setup":"",
-			    "inc":"#include \"MakerKit.h\"\n#include <Servo.h>\n",
+			    "inc":"#include \"MakerKit.h\"\n",
 			    "def":"MakerKit Maker;\n",
 			    "work":"Maker.getAcceleromenterValue({0})",
 			    "loop":""

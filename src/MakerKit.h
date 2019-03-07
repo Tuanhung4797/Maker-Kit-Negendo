@@ -30,8 +30,10 @@ NEGENDO Education
 #include "Arduino.h"
 #include "stdint.h"
 
-//#include "DHT.h"
-#include "Servo.h"
+#include "Scratch.h"
+
+#define DEBUG 1
+//#define DEBUG_SERIAL 1
 
 //#define DHTTYPE DHT11
 //#define DHTPIN 2
@@ -39,6 +41,16 @@ NEGENDO Education
 #define M1B 5
 #define M2A 6
 #define M2B 11
+
+//////// define State
+#define READ_SERIAL 0 
+#define PARSING 1
+#define WRITE_SERIAL 2
+
+#define GET 0
+#define RUN 1
+#define RESET 2
+#define START 3
 
 class MakerKit
 {
@@ -66,10 +78,69 @@ public:
     int getLight(int pin);
     int getAcceleromenterValue(int axis);
     int getPotentiomenterLocation(int pin);
+    //////////////////////////////////////////
+
+    void run();
+    void readSerial();
+    void parseData();
+    void writeSerial();
+
 private:
     /* data */
     //DHT dht = DHT(DHTPIN, DHTTYPE);
-    Servo servo1;
-    Servo servo2;
+
+    int State = 0;
+    bool first_run = true;
+    double timeStart;
+    bool isAvailable = false;
+    bool isStart=false;
+    unsigned char prevc=0;
+    int index = 0;
+    int dataLen;
+    int ind = 0;
+    unsigned char buffer[32]; // reading
+    unsigned char serial_buf[12]; // writing
+    unsigned char serialRead;
+    uint8_t command_index = 0;
+
+    union
+    {
+        byte byteVal[4];
+        float floatVal;
+        long longVal;
+    }val;
+
+    union
+    {
+        byte byteVal[8];
+        double doubleVal;
+    }valDouble;
+
+    union
+    {
+        byte byteVal[2];
+        short shortVal;
+    }valShort;
+    /////////////////////////////////////////
+    void writeHead();
+    void writeEnd();
+    /////////////////////////////////////////
+    unsigned char readBuffer(int index);  //read Serial Comming buffer
+    void writeBuffer(int index,unsigned char c); //write to Serial Sending Buffer
+    void clearBuffer(unsigned char *buf, int leng);
+    /////////////////////////////////
+    void callOK();
+    void sendByte(char c);
+    void sendString(String s);
+    void sendFloat(float value);
+    void sendShort(double value);
+    void sendDouble(double value);
+    short readShort(int idx);
+    float readFloat(int idx);
+    long readLong(int idx);
+
+    void runFunction(int device);
+    int searchServoPin(int pin);
+    void readSensors(int device);
 };
 #endif

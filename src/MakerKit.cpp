@@ -171,3 +171,143 @@ void MakerKit::disableServo(int pin)
 {
 
 }
+/////////////////////////////////////
+
+void MakerKit::run()
+{
+    if(first_run)
+    {
+        timeStart = millis();
+        #ifdef DEBUG
+            Serial.println(String("State No: ") + State + String(" Running..."));
+        #endif
+        first_run = false;
+    }
+    switch (State)
+    {
+        case READ_SERIAL:
+        {
+            readSerial();
+        }
+        break;
+        case PARSING:
+        {
+            parseData();
+        }
+        break;
+        case WRITE_SERIAL:
+        {
+            writeSerial();
+        }
+        break;
+    }
+}
+void MakerKit::readSerial()
+{
+    if(Serial.available() > 0){
+        isAvailable = true;
+        serialRead = Serial.read();
+
+        unsigned char c = serialRead & 0xff;
+        if(c==0x55 && isStart == false){
+            if(prevc == 0xff){
+                index = 1;
+                isStart = true;
+            }
+        }
+        else{
+            prevc = c;
+            if(isStart){
+                if(index == 2){
+                    dataLen = c;
+                    #ifdef DEBUG_SERIAL
+                        Serial.print(c,HEX);
+                        Serial.print(" ");
+                    #endif
+                }
+                else if(index > 2){
+                    dataLen--;
+                    #ifdef DEBUG_SERIAL
+                        Serial.print(dataLen);
+                        Serial.print(" ");
+                    #endif
+                }
+            }
+        }
+        buffer[index] = c;
+        index++;
+        if(index > 51){
+            index = 0;
+            isStart = false;
+        }
+        if(isStart && dataLen == 0 && index > 3){
+            isStart = false;
+            State = PARSING; //Serial Data available now, State change to parsing 
+            first_run = true; //set first run for next State
+            #ifdef DEBUG
+                Serial.print("Valid Data coming ");
+                for(int i=0; i < index+1; i++){
+                    Serial.print(buffer[i],HEX);
+                    Serial.print("-");
+                }
+                Serial.println();
+                Serial.println("Goto Parsing");
+            #endif
+            index = 0;
+        } 
+    }
+}
+void MakerKit::parseData()
+{
+    ind = 0;
+    isStart = false;
+    int idx = buffer[3];
+    command_index = (uint8_t)idx;
+    int action = buffer[4];
+    int device = buffer[5];
+    switch(action){
+        case GET:{
+            if(device != ULTRASONIC_SENSOR){
+                writeHead();
+                writeBuffer(ind++,idx);
+            }
+            readSensors(device);
+            writeEnd();
+            State = WRITE_SERIAL;
+            first_run = true;
+        }
+        break;
+        case RUN:{
+            runFunction(device);
+            callOK();
+            #ifdef DEBUG
+                Serial.println("Scratch command done, go to send response");
+            #endif
+            State = WRITE_SERIAL;
+            first_run = true;
+        }
+        break;
+        case RESET:{
+            callOK();
+            State = WRITE_SERIAL;
+            first_run = true;
+        }
+        break;
+        default:
+            callOK();
+            State = WRITE_SERIAL;
+            first_run = true;
+        break;
+    }
+    clearBuffer(buffer,sizeof(buffer));  //clear receiving buffers
+}
+void MakerKit::writeSerial()
+{
+    for(int i=0; i<ind+1; i++){
+        Serial.write(serial_buf[i]);
+        delayMicroseconds(100);
+    }
+    clearBuffer(buffer,sizeof(buffer));
+    clearBuffer(serial_buf,sizeof(serial_buf));
+    State = READ_SERIAL;
+}
