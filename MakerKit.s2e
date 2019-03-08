@@ -140,7 +140,7 @@
         ],
 
         ["R", 
-			"Get Gas sensor pin: %d.pin ","getGasSensor","A0",
+			"Get Gas sensor pin: %d.pinA ","getGasSensor","A0",
 		    {
 			    "encode":"{d0}",
 			    "setup":"",
@@ -152,7 +152,7 @@
         ],
 
         ["R", 
-			"Get Sound sensor pin: %d.pin ","getSound","A0",
+			"Get Sound sensor pin: %d.pinA ","getSound","A0",
 		    {
 			    "encode":"{d0}",
 			    "setup":"",
@@ -164,7 +164,7 @@
         ],
 
         ["R", 
-			"Get Light sensor pin: %d.pin ","getLight","A0",
+			"Get Light sensor pin: %d.pinA ","getLight","A0",
 		    {
 			    "encode":"{d0}",
 			    "setup":"",
@@ -176,7 +176,7 @@
         ],
 
 		["R", 
-			"Get Soil Moisture sensor pin: %d.pin ","getSoilMoisture","A0",
+			"Get Soil Moisture sensor pin: %d.pinA ","getSoilMoisture","A0",
 		    {
 			    "encode":"{d0}",
 			    "setup":"",
@@ -188,7 +188,7 @@
         ],
 
         ["R", 
-			"Get Potentiometer sensor pin: %d.pin ","getPotentiometer","A0",
+			"Get Potentiometer sensor pin: %d.pinA ","getPotentiometer","A0",
 		    {
 			    "encode":"{d0}",
 			    "setup":"",
@@ -264,7 +264,8 @@
         "motor":["M1","M2"],
         "status":["ON","OFF"],
 		"row":["LINE1","LINE2"],
-        "servo":["D2","D3","D4","D5","D6","D7","D8","D9","D10","D11","D12"]
+        "servo":["D2","D3","D4","D5","D6","D7","D8","D9","D10","D11","D12"],
+		"pinA":["A0","A1","A2","A3"]
 	},
 
     "values":{

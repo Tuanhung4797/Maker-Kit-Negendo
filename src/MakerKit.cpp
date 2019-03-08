@@ -311,3 +311,230 @@ void MakerKit::writeSerial()
     clearBuffer(serial_buf,sizeof(serial_buf));
     State = READ_SERIAL;
 }
+void MakerKit::runFunction(int device)
+{
+    //0xff 0x55 0x6 0x0 0x1 0xa 0x9 0x0 0x0 0xa
+    //int port = buffer[6];
+    //int pin = port;
+    switch(device){
+        case SET_MOTOR:{
+            int motor = readShort(6);
+            int speed = readShort(8);
+            setMotor(motor,speed);
+            break;
+        }
+        case STOP_MOTOR:{
+            int motor = readShort(6);
+            stopMotor(motor);
+            break;
+        }
+        case SET_RELAY:{
+            int pin = readShort(6);
+            int status = readShort(8);
+            relay(pin,status);
+            break;
+        }
+        case SET_LED:{
+            int pin = readShort(6);
+            int status = readShort(8);
+            setLED(pin,status);
+            break;
+        }
+        case SET_SERVO:{
+            int pin = readShort(6);
+            int angle = readShort(8);
+            setServo(pin,angle);
+            break;
+        }
+        case DIS_SERVO:{
+            int pin = readShort(6);
+            disableServo(pin);
+            break;
+        }
+        case LCD_PRINT:{
+            int line = readShort(6);
+            int pos = readShort(8);
+            
+            break;
+        }
+        case LCD_CLEAR:{
+
+            break;
+        }
+    }
+}
+void MakerKit::readSensors(int device)
+{
+    /*****************Recevice*************************
+      ff 55 len idx action device port slot data a
+      0  1  2   3   4      5      6    7    8
+    *********************Response**********************
+      ff 55 idx type data \r \n
+    ***************************************************/
+    float value = 0.0;
+    int port,slot,pin;
+    port = readBuffer(6);
+    pin = port;
+    switch (device){
+        case BUTTON:{
+           uint8_t pin = readBuffer(6);
+           sendByte((byte)buttonPressed(pin));
+        }
+        break;
+        case SWITCH:{
+            uint8_t pin = readBuffer(6);
+            sendByte((byte)readMicroswitch(pin));
+        }
+        break;
+        case TOUCH:{
+            uint8_t pin = readBuffer(6);
+            sendByte((byte)readTouch(pin));
+        }
+        break;
+        case VIBRATION:{
+            uint8_t pin = readBuffer(6);
+            sendByte((byte)readVibration(pin));
+        }
+        break;
+        case GAS:{
+            uint8_t pin = readBuffer(6);
+            sendShort((int)getGasSensor(pin));
+        }
+        break;
+        case SOUND:{
+            uint8_t pin = readBuffer(6);
+            sendShort((int)getSound(pin));
+        }
+        break;
+        case LIGHT:{
+            uint8_t pin = readBuffer(6);
+            sendShort((int)getLight(pin));
+        }
+        break;
+        case SOIL_MOISTURE:{
+            uint8_t pin = readBuffer(6);
+            sendShort((int)getSoilMoisture(pin));
+        }
+        break;
+        case POT_LOCATION:{
+            uint8_t pin = readBuffer(6);
+            sendShort((int)getPotentiomenterLocation(pin));
+        }
+        break;
+        case ACCELEROMENTER:{
+            uint8_t axis = readBuffer(6);
+            sendShort((int)getAcceleromenterValue(axis));
+        }
+        break;
+        case TEMPERATURE:{
+            uint8_t pin = readBuffer(6);
+            sendShort((int)getTemperature(pin));
+        }
+        case HUMIDITY:{
+            uint8_t pin = readBuffer(6);
+            sendShort((int)getHumidity(pin));
+        }
+        break;
+        case DONE:{
+            sendFloat(actionDone);
+        }
+        break;
+    }
+}
+
+///////////Private method for data package
+void MakerKit::clearBuffer(unsigned char *buf, int leng)
+{
+    for(int i=0; i<leng; i++){
+        *(buf+i) = 0;
+    }
+}
+void MakerKit::writeHead()
+{
+    ind = 0;
+    serial_buf[ind++] = 0xff;
+    serial_buf[ind++] = 0x55;
+}
+void MakerKit::writeEnd()
+{
+    serial_buf[ind++] = 0xd;
+    serial_buf[ind++] = 0xa;
+}
+unsigned char MakerKit::readBuffer(int index){    
+    return buffer[index]; 
+}
+void MakerKit::writeBuffer(int index,unsigned char c)
+{
+  serial_buf[index]=c;
+}
+
+void MakerKit::callOK()
+{ 
+    ind = 0;
+    writeBuffer(ind++,0xff);
+    writeBuffer(ind++,0x55);
+    writeEnd();
+}
+void MakerKit::sendByte(char c)
+{
+    writeBuffer(ind++,1);
+    writeBuffer(ind++,c);
+}
+void MakerKit::sendString(String s)
+{
+    int l = s.length();
+    writeBuffer(ind++,4);
+    writeBuffer(ind++,l);
+    for(int i=0;i<l;i++)
+    {
+        writeBuffer(ind++,s.charAt(i));
+    }
+}
+void MakerKit::sendFloat(float value)
+{
+    writeBuffer(ind++,0x2);
+    val.floatVal = value;
+    writeBuffer(ind++,val.byteVal[0]);
+    writeBuffer(ind++,val.byteVal[1]);
+    writeBuffer(ind++,val.byteVal[2]);
+    writeBuffer(ind++,val.byteVal[3]);
+}
+void MakerKit::sendShort(double value)
+{
+    writeBuffer(ind++,3);
+    valShort.shortVal = value;
+    writeBuffer(ind++,valShort.byteVal[0]);
+    writeBuffer(ind++,valShort.byteVal[1]);
+}
+void MakerKit::sendDouble(double value)
+{
+    writeBuffer(ind++,2);
+    valDouble.doubleVal = value;
+    writeBuffer(ind++,valDouble.byteVal[0]);
+    writeBuffer(ind++,valDouble.byteVal[1]);
+    writeBuffer(ind++,valDouble.byteVal[2]);
+    writeBuffer(ind++,valDouble.byteVal[3]);
+}
+short MakerKit::readShort(int idx)
+{
+    valShort.byteVal[0] = readBuffer(idx);
+    valShort.byteVal[1] = readBuffer(idx+1);
+    return valShort.shortVal;
+}
+
+float MakerKit::readFloat(int idx)
+{
+    val.byteVal[0] = readBuffer(idx);
+    val.byteVal[1] = readBuffer(idx+1);
+    val.byteVal[2] = readBuffer(idx+2);
+    val.byteVal[3] = readBuffer(idx+3);
+    return val.floatVal;
+}
+long MakerKit::readLong(int idx)
+{
+    val.byteVal[0] = readBuffer(idx);
+    val.byteVal[1] = readBuffer(idx+1);
+    val.byteVal[2] = readBuffer(idx+2);
+    val.byteVal[3] = readBuffer(idx+3);
+    return val.longVal;
+}

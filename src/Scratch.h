@@ -39,28 +39,29 @@ Define of ID function for Scratch interface
 #define LEDMATRIX 41
 #define TIMER 50
 #define TOUCH_SENSOR 51
-
-#define STOP 60
-#define SETMOTOR 61
-#define FORWARD 62
-#define BACKWARD 63
-#define TURNLEFT 64
-#define TURNRIGHT 65
-#define SETSERVO 66
-#define DISABLE_SERVO 67
-#define PLAYMEMODY 68
-#define SETCOLOR 69
-#define OFFCOLOR 70
-#define CREATESOUND 76
+////////RUN/////////
+#define SET_MOTOR 60
+#define STOP_MOTOR 61
+#define SET_RELAY 62
+#define SET_LED 63
+#define SET_SERVO 64
+#define DIS_SERVO 65
+#define LCD_PRINT 66
+#define LCD_CLEAR 67
 ///////GET////////
-#define DISTANCE 71
-#define LIGHT_LEVEL 72
-#define CENTERLINE 73
-#define RIGHTLINE 74
-#define LEFTLINE 75
+#define BUTTON 70
+#define SWITCH 71
+#define TOUCH 72
+#define VIBRATION 73
+#define GAS 74
+#define SOUND 75
+#define LIGHT 76
+#define SOIL_MOISTURE 77
+#define POT_LOCATION 78
+#define ACCELEROMENTER 79
+#define TEMPERATURE 80
+#define HUMIDITY 81
 
-////////////////////////
-#define CONFIG 80 
 
 ///////////////////////
 #define RCDATA 90

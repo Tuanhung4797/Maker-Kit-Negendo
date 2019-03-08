@@ -91,6 +91,7 @@ private:
 
     int State = 0;
     bool first_run = true;
+    bool actionDone = false;
     double timeStart;
     bool isAvailable = false;
     bool isStart=false;
