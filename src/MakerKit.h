@@ -31,6 +31,8 @@ NEGENDO Education
 #include "stdint.h"
 
 #include "Scratch.h"
+#include "DHT.h"
+#include "Servo.h"
 
 #define DEBUG 1
 //#define DEBUG_SERIAL 1
@@ -46,11 +48,6 @@ NEGENDO Education
 #define READ_SERIAL 0 
 #define PARSING 1
 #define WRITE_SERIAL 2
-
-#define GET 0
-#define RUN 1
-#define RESET 2
-#define START 3
 
 class MakerKit
 {
@@ -69,8 +66,8 @@ public:
     bool buttonPressed(int pin);
     bool readMicroswitch(int pin);
     int getGasSensor(int pin);
-    int getTemperature(int pin);
-    int getHumidity(int pin);
+    float getTemperature(int pin);
+    float getHumidity(int pin);
     bool readTouch(int pin);
     bool readVibration(int pin);
     int getSoilMoisture(int pin);
@@ -86,8 +83,6 @@ public:
     void writeSerial();
 
 private:
-    /* data */
-    //DHT dht = DHT(DHTPIN, DHTTYPE);
 
     int State = 0;
     bool first_run = true;

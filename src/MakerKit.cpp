@@ -92,17 +92,23 @@ int MakerKit::getAcceleromenterValue(int axis)
 }
 int MakerKit::getPotentiomenterLocation(int pin)
 {
-    int location = analogRead(pin);
+    int location = analogRead(pin-14);
     location = map(location,0,1024,0,100);
     return location;
 }
-int MakerKit::getTemperature(int pin)
+float MakerKit::getTemperature(int pin)
 {
-
+    DHT dht = DHT(pin, DHT11);
+    dht.begin();
+    float t = dht.readTemperature();
+    return t;
 }
-int MakerKit::getHumidity(int pin)
+float MakerKit::getHumidity(int pin)
 {
-
+    DHT dht = DHT(pin, DHT11);
+    dht.begin();
+    float h = dht.readHumidity();
+    return h;
 }
 void MakerKit::stopM1()
 {
@@ -165,7 +171,7 @@ void MakerKit::stopMotor(int M)
 }
 void MakerKit::setServo(int pin, int angle)
 {
-
+    
 }
 void MakerKit::disableServo(int pin)
 {
@@ -267,10 +273,15 @@ void MakerKit::parseData()
     int device = buffer[5];
     switch(action){
         case GET:{
-            if(device != ULTRASONIC_SENSOR){
+            #ifdef DEBUG
+                Serial.print("Mode is GET DEVICE: ");
+                Serial.println(device);
+            #endif
+         //   if(device != ULTRASONIC_SENSOR){
                 writeHead();
                 writeBuffer(ind++,idx);
-            }
+         //   }
+            
             readSensors(device);
             writeEnd();
             State = WRITE_SERIAL;
@@ -278,6 +289,9 @@ void MakerKit::parseData()
         }
         break;
         case RUN:{
+            #ifdef DEBUG
+                Serial.println("Mode is RUN");
+            #endif
             runFunction(device);
             callOK();
             #ifdef DEBUG
@@ -288,12 +302,18 @@ void MakerKit::parseData()
         }
         break;
         case RESET:{
+            #ifdef DEBUG
+                Serial.println("Mode is RESET");
+            #endif
             callOK();
             State = WRITE_SERIAL;
             first_run = true;
         }
         break;
         default:
+            #ifdef DEBUG
+                Serial.println("No mode");
+            #endif
             callOK();
             State = WRITE_SERIAL;
             first_run = true;
@@ -372,9 +392,7 @@ void MakerKit::readSensors(int device)
       ff 55 idx type data \r \n
     ***************************************************/
     float value = 0.0;
-    int port,slot,pin;
-    port = readBuffer(6);
-    pin = port;
+    int pin = readBuffer(6);
     switch (device){
         case BUTTON:{
            uint8_t pin = readBuffer(6);
